@@ -1,92 +1,295 @@
 <!DOCTYPE html>
-
-<html lang="fr">
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="./styles.css">
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sandweg, is an architectural practice operating in suburban context">
     <title>Sandweg</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles for animations and global look */
+        body {
+            font-family: 'Inter', sans-serif;
+            cursor: crosshair;
+            /* Updated to use the light grey grid background */
+            background-color: #f8f8f8; /* Very light grey fallback */
+            background-image: linear-gradient(to right, rgba(200, 200, 200, 0.5) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(200, 200, 200, 0.5) 1px, transparent 1px);
+            background-size: 40px 40px; /* Size of the grid cells */
+            
+            min-height: 100vh;
+            overflow: hidden; /* Prevent scrollbar when elements are positioned off-screen */
+            padding-bottom: 50px; /* Space for the status bar */
+        }
+        .portfolio-artifact {
+            position: absolute;
+            opacity: 0;
+            /* Initial state: scaled down and straight (no rotation) */
+            /* NOTE: Initial scale is 1 in the user's provided CSS, making the animation less dramatic. */
+            transform: scale(1) rotate(0deg); 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            /* object-fit is generally good, but setting height: auto in JS is the specific fix here */
+            object-fit: contain; 
+            
+            /* Placeholder styling if image fails to load */
+            background-color: #f4f4f5; /* Zinc-100 fallback background for light mode */
+            color: #3f3f46; /* Zinc-700 placeholder text */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            text-align: center;
+        }
+        .portfolio-artifact.visible {
+            opacity: 1;
+            /* Final state: full scale, straight (0 rotation) */
+            transform: scale(1) rotate(0deg);
+        }
+        /* Style for the main container */
+        .header-content {
+            z-index: 06;
+            position: relative;
+        }
+        /* Style for the status bar at the bottom */
+        #status-bar {
+            opacity: 1; /* Always visible */
+        }
+        #status-bar.active {
+            font-weight: normal ; /* Highlight text color when a specific caption is displayed (Grey accent) */
+        }
+    </style>
+</head>
+<body class="p-8 text-black relative">
 
-  </head>
-
-<main>
-    <div>
-       <h1><span><a href="./index.html">SANDWEG</a></span><span> | </span><a href="mailto:sandweg@ik.com">Architectes Arpenteurs</a></span></h1>
-       
-      
-      <div class="full-height">
-        <div class="height-container">
-  
-          <div class="column one scroll">
-            <div class="column-header"></div>
-            <div class="column-main">
-                <figure><img src="./src/taiwan_04.jpg"><figcaption>Pigeonnier, Taïwan</figcaption></figure>
-                <figure><img src="./src/rhin_08.jpg"><figcaption>Freibad, Rheinkilometer 686-687 <br> diplôme EPFL</figcaption></figure>
-                <figure><img src="./src/ciudad_06.jpg"><figcaption>Portico de los Huespedes, Ciudad Abierta, Chili</figcaption></figure>
-                <figure><img src="./src/rhin_01.jpg"><figcaption>Un seuil climatique face à Cologne, Rheinkilometer 686-687 <br> diplôme EPFL</figcaption></figure>
-                <figure><img src="./src/ceramique1.jpg"><figcaption> </figcaption></figure>
-                <figure><img src="./src/bunsu_01.jpg"><figcaption>Fontaine de la Palud <br> ref Concours pour le pavillon Suisse à l'UIA de Seoul</figcaption></figure>
-                <figure><img src="./src/rhin_05.jpg"><figcaption>Biergarten, Rheinkilometer 686-687, diplôme EPFL</figcaption></figure>
-                <figure><img src="./src/milan.jpg"><figcaption></figcaption></figure>
-                <figure><img src="./src/bunsu_04.jpg"><figcaption>Bunsu, Concours pour le pavillon Suisse à l'UIA de Seoul</figcaption></figure>
-                <figure><img src="./src/ciudad_02.JPG"><figcaption>Portico de los Huespedes, Ciudad Abierta, Chili</figcaption></figure>
-        
-            </div>
-     
-          </div>
-          
-          <div class="column two scroll">
-            <div class="column-header"></div>
-            <div class="column-main">
-              <figure><img src="./src/sandweg.JPG"><figcaption>SANDWEG</figcaption></figure>
-              <figure><img src="./src/ernen_01.jpg"><figcaption>Dorfbrunnen, Ernen</figcaption></figure>
-              <figure><img src="./src/taiwan_03.jpg"><figcaption>Church, Göttfried Boehm, Gingliao, Taïwan</figcaption></figure>
-              <figure><img src="./src/osorno.jpg"><figcaption></figcaption></figure>
-              <figure><img src="./src/ciudad_05.jpg"><figcaption>Portico de los Huespedes, Ciudad Abierta, Chili</figcaption></figure>
-              <figure><img src="./src/rhin_07.jpg"><figcaption>Biergarten, Rheinkilometer 686-687 <br> diplôme EPFL</figcaption></figure>
-              <figure><img src="./src/ceramique2.jpg"><figcaption></figcaption></figure>
-              <figure><img src="./src/rhin_12.JPG"><figcaption>Exploration d'un fleuve habité <br> diplôme EPFL</figcaption></figure>
-              <figure><img src="./src/saopaulo.jpg"><figcaption>sao paulo</figcaption></figure>
-              <figure><img src="./src/rhin_04.jpg"><figcaption>Freibad, Rheinkilometer 686-687 <br> diplôme EPFL</figcaption></figure>
-              <figure><img src="./src/ciudad_01.jpg"><figcaption>Portico de los Huespedes, Ciudad Abierta, Chili</figcaption></figure>
-
-            </div>
-           
-          </div>
-          
-          <div class="column three scroll">
-            <div class="column-header"></div>
-            <div class="column-main">
-              <figure><img src="./src/chambrejaune.jpg"><figcaption>Le Mystère de la chambre jaune</figcaption></figure>
-              <figure><img src="./src/ciudad_04.JPG"><figcaption>Portico de los Huespedes, Ciudad Abierta, Chili</figcaption></figure>
-              <figure><img src="./src/bunsu_03.jpg"><figcaption>Bunsu, Concours pour le pavillon Suisse à l'UIA de Seoul</figcaption></figure>
-              <figure><img src="./src/rhin_02.jpg"><figcaption>Un seuil climatique face à Cologne, Rheinkilometer 686-687 <br> diplôme EPFL</figcaption></figure>
-              <figure><img src="./src/taiwan_02.jpg"><figcaption>Infrastructure et espace public, Taïwan</figcaption></figure>
-              <figure><img src="./src/ciudad_03.JPG"><figcaption>Portico de los Huespedes, Ciudad Abierta, Chili</figcaption></figure>
-              <figure><img src="./src/rhin_15.png"><figcaption>Wasserpump, Rheinkilometer 686-687 <br> diplôme EPFL</figcaption></figure>
-              <figure><img src="./src/chambrejaune.jpg"><figcaption>Le mystère de la chambre jaune</figcaption></figure>
-              <figure><img src="./src/rhin_10.jpg"><figcaption>Wasserpump, Rheinkilometer 686-687 <br> diplôme EPFL</figcaption></figure>
-              <figure><img src="./src/ceramique.jpg"><figcaption></figcaption></figure>
-              <figure><img src="./src/rhin_13.JPG"><figcaption>Exploration d'un fleuve habité <br> diplôme EPFL</figcaption></figure>
-              <figure><img src="./src/rhin_14.jpg"><figcaption>Un seuil climatique face à Cologne, Rheinkilometer 686-687 <br> diplôme EPFL</figcaption></figure>
-              <figure><img src="./src/ghga_big_6.jpeg"><figcaption>ghga</figcaption></figure>
-    
-            </div>
-           
-          </div>
-  
-        </div>
-      </div>
+    <!-- Main Header Content (Fixed Position) -->
+    <div class="header-content text-left mb-10 p-6">
+        <h1 class="text-3xl font-semibold mb-2 z-60">SANDWEG</h1>
+        <p class="text-lg font-semibold ">Architectes</p>
     </div>
-  </main>
-  
-  <footer>
-    <p>Camille Paragon-Wüthrich et Pierre Wüthrich</p> 
-    <p>|</p>
-    <p>Sängergasse 21, 4054 Basel </p> 
-    <p>|</p>
-    <p>Sandweg n°1938, 4123 Allschwil</p> 
-  </footer>
-</main>
+
+    <div id="artifact-container" class="absolute inset-0">
+        <!-- Artifacts will be added here dynamically by JavaScript -->
+    </div>
+
+    <!-- Status Bar for Hover Captions -->
+    <div id="status-bar" class="fixed footer-content bottom-0 left-0 w-full backdrop-blur-sm text-center py-2 text-sm font-semibold z-05">
+        <p class="text-xs font-medium ">info</p>
+    </div>
+
+    <!-- 1. Load the artifact data first from the external file -->
+    <script src="artifacts.js"></script>
+
+    <script>
+        // The ARTIFACT_DATA_GENERATED array is now available globally from artifacts.js
+        
+        // Mutable array to track artifacts that have NOT yet been used.
+        // NOTE: Renamed to use ARTIFACT_DATA_GENERATED from the external file.
+        let availableArtifacts = ARTIFACT_DATA_GENERATED.slice();
+        
+        let artifactCounter = 0;
+        const statusBar = document.getElementById('status-bar');
+        
+        const initialStatusBarText = "Info";
+        let lastCreatedCaption = initialStatusBarText; 
+        
+        statusBar.textContent = initialStatusBarText;
+        statusBar.classList.remove('active');
+
+        /**
+         * Selects a random artifact data object that hasn't been used yet.
+         * Resets the available list if all items have been used.
+         * @returns {object | null} The artifact data (url and name), or null if the pool is empty and cannot reset.
+         */
+        function getRandomArtifactData() {
+            if (availableArtifacts.length === 0) {
+                // Reset the pool using the GENERATED array loaded from artifacts.js
+                availableArtifacts = ARTIFACT_DATA_GENERATED.slice();
+                console.log("Artifact pool reset. All images are available again.");
+                
+                if (availableArtifacts.length === 0) {
+                     return null;
+                }
+            }
+
+            const randomIndex = Math.floor(Math.random() * availableArtifacts.length);
+            const selectedArtifact = availableArtifacts[randomIndex];
+            
+            // Remove the selected artifact from the available list (preventing reuse until reset)
+            availableArtifacts.splice(randomIndex, 1);
+            
+            return selectedArtifact;
+        }
+
+        /**
+         * Creates and inserts a new image artifact at the click coordinates.
+         * The element is sized to 1/4th of the window's width upon loading.
+         * @param {number} x - The horizontal position (client X).
+         * @param {number} y - The vertical position (client Y).
+         */
+        function createArtifact(x, y) {
+            const container = document.getElementById('artifact-container');
+            const randomArtifactData = getRandomArtifactData();
+
+            if (!randomArtifactData) {
+                console.error("No artifact data available.");
+                return;
+            }
+
+            const img = document.createElement('img');
+            const currentCount = ++artifactCounter;
+            
+            // --- UPDATED CAPTION GENERATION LOGIC ---
+            // This is now robust, handling extensions of any length (e.g., .jpg, .jpeg, .png).
+            const url = randomArtifactData.url;
+            
+            // 1. Remove the fixed "./src/" prefix (first 8 characters)
+            let cleanPath = url.substring(8); 
+            
+            // 2. Find the last dot and remove everything after it (the file extension)
+            const lastDotIndex = cleanPath.lastIndexOf('.');
+            const newCaption = (lastDotIndex === -1) ? cleanPath : cleanPath.substring(0, lastDotIndex);
+
+
+            img.src = url;
+            img.alt = newCaption; 
+            
+            // Add classes for styling and clickability
+            img.classList.add('portfolio-artifact', 'cursor-pointer');
+
+            // --- 1. Image Loaded Handler: Sizing and Positioning ---
+            img.onload = function() {
+                // Set width to 1/4th of the window page width
+                const desiredWidth = window.innerWidth / 4;
+
+                const naturalWidth = img.naturalWidth;
+                const naturalHeight = img.naturalHeight;
+                
+                // Calculate the corresponding height to maintain the aspect ratio based on the new desiredWidth
+                const aspectRatio = naturalHeight / naturalWidth;
+                const calculatedHeight = desiredWidth * aspectRatio;
+
+                // Set the dynamic dimensions
+                img.style.width = `${desiredWidth}px`;
+                img.style.height = 'auto'; // Ensures aspect ratio is preserved by the browser
+                
+                // Calculate dynamic offset for centering on the cursor. 
+                const offsetX = desiredWidth / 2;
+                const offsetY = calculatedHeight / 2;
+
+                // Position the element centered on the click point
+                img.style.left = `${x - offsetX}px`;
+                img.style.top = `${y - offsetY}px`;
+                
+                // Append to DOM (must happen before triggering visibility)
+                container.appendChild(img);
+
+                // Update global state and status bar immediately
+                lastCreatedCaption = newCaption;
+                statusBar.textContent = lastCreatedCaption;
+                statusBar.classList.add('active'); 
+
+                // Trigger the transition (Wait a tick for the browser to register the initial state)
+                setTimeout(() => {
+                    img.classList.add('visible');
+                }, 10);
+            };
+
+            // --- 2. Error Handler (Image not found) ---
+            img.onerror = function() {
+                // Since we couldn't load the image, we can't get natural dimensions. 
+                // We'll use a fixed placeholder size, ensuring it's still removable.
+                
+                const PLACEHOLDER_SIZE = 200;
+                
+                const placeholderDiv = document.createElement('div');
+                placeholderDiv.textContent = `[Placeholder: ${randomArtifactData.name}]`;
+                
+                // Set fixed size and position based on fixed size offset
+                const offsetX = PLACEHOLDER_SIZE / 2;
+                const offsetY = PLACEHOLDER_SIZE / 2;
+
+                placeholderDiv.style.width = `${PLACEHOLDER_SIZE}px`;
+                placeholderDiv.style.height = `${PLACEHOLDER_SIZE}px`;
+                placeholderDiv.style.left = `${x - offsetX}px`;
+                placeholderDiv.style.top = `${y - offsetY}px`;
+                
+                // Copy classes and alt attribute
+                placeholderDiv.className = img.className;
+                placeholderDiv.classList.add('p-2', 'border-red-500', 'border-dashed'); // Indicate error
+                placeholderDiv.setAttribute('alt', img.alt); 
+                
+                // Re-assign listeners for interactivity and add to DOM
+                placeholderDiv.onmouseenter = img.onmouseenter;
+                placeholderDiv.onclick = img.onclick;
+                container.appendChild(placeholderDiv);
+
+                // Trigger visibility
+                setTimeout(() => {
+                   placeholderDiv.classList.add('visible');
+                }, 10);
+                
+                // Update global state and status bar for the failed element
+                lastCreatedCaption = newCaption;
+                statusBar.textContent = `ERROR: ${newCaption} (Using Placeholder)`;
+                statusBar.classList.add('active'); 
+            };
+
+            // --- 3. Interaction Handlers (Defined before setting src) ---
+            
+            // HOVER listener for display override
+            img.onmouseenter = function() {
+                // Display the element's alt text (caption) in the status bar
+                statusBar.textContent = this.alt;
+                statusBar.classList.add('active');
+            };
+            
+            // Click listener for removal
+            img.onclick = function(e) {
+                e.stopPropagation(); 
+                
+                const elementToRemove = this;
+                const removedCaption = elementToRemove.alt;
+
+                // Handle status bar update on removal
+                if (removedCaption === lastCreatedCaption) {
+                    lastCreatedCaption = initialStatusBarText;
+                    statusBar.textContent = initialStatusBarText;
+                    statusBar.classList.remove('active');
+                } else if (statusBar.textContent === removedCaption) {
+                    statusBar.textContent = lastCreatedCaption;
+                    if (lastCreatedCaption !== initialStatusBarText) {
+                        statusBar.classList.add('active');
+                    } else {
+                        statusBar.classList.remove('active');
+                    }
+                }
+                
+                // Trigger the fade-out transition
+                elementToRemove.classList.remove('visible');
+
+                // Wait for the CSS transition (0.5s) before removing from the DOM
+                setTimeout(() => {
+                    if (elementToRemove.parentElement) {
+                        elementToRemove.parentElement.removeChild(elementToRemove);
+                    }
+                }, 50); 
+            };
+            
+            // Important: Do NOT append the image here. Append only happens in `onload` to ensure size is set first.
+            
+        }
+
+        // Add the primary click listener to the entire document body for creation
+        document.body.addEventListener('click', (e) => {
+            // Ignore clicks on the fixed header element or the status bar
+            if (e.target.closest('.header-content') || e.target.closest('#status-bar')) {
+                return;
+            }
+            createArtifact(e.clientX, e.clientY);
+        });
+        
+    </script>
+</body>
 </html>
