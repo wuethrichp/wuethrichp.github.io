@@ -64,9 +64,20 @@
 <body class="p-8 text-black relative">
 
     <!-- Main Header Content (Fixed Position) -->
-    <div class="header-content text-left mb-10 p-6">
-        <h1 class="text-3xl font-semibold mb-2 z-60">SANDWEG</h1>
-        <p class="text-lg font-semibold ">Architectes</p>
+    <div class="header-content text-left mb-10 p-3">
+        <h1 class="text-3xl font-semibold mb-2 z-60 tracking-wide">SANDWEG</h1>
+        <label class="text-lg font-semibold "for="infos"></label>
+
+        <select name="pets" id="pet-select">
+    <option class="text-lg font-semibold " value="">Architectes</option>
+    <option class="text-lg font-semibold " value="rain">Camille Paragon + Pierre Wüthrich</option>
+    <option class="text-lg font-semibold " value="dog">Rue de Lausanne 49d</option>
+    <option class="text-lg font-semibold " value="cat">1950 Sion, VS, Suisse</option>
+    <option class="text-lg font-semibold " value="parrot">+41 78 212 75 13</option>
+    <option class="text-lg font-semibold " value="spider">info (at) sandweg.site</option>
+    <option class="text-lg font-semibold " value="goldfish">Talk to you soon !</option>
+        </select>
+
     </div>
 
     <div id="artifact-container" class="absolute inset-0">
@@ -75,7 +86,7 @@
 
     <!-- Status Bar for Hover Captions -->
     <div id="status-bar" class="fixed footer-content bottom-0 left-0 w-full backdrop-blur-sm text-center py-2 text-sm font-semibold z-05">
-        <p class="text-xs font-medium ">info</p>
+        <p class="text-xs font-medium ">Collection</p>
     </div>
 
     <!-- 1. Load the artifact data first from the external file -->
@@ -91,7 +102,7 @@
         let artifactCounter = 0;
         const statusBar = document.getElementById('status-bar');
         
-        const initialStatusBarText = "Info";
+        const initialStatusBarText = "Collecting artifacts ...";
         let lastCreatedCaption = initialStatusBarText; 
         
         statusBar.textContent = initialStatusBarText;
